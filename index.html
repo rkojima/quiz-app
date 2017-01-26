@@ -6,7 +6,26 @@
     <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
-    <h1>Quiz App</h1>
+    <div class="quiz">
+        <h1 class="question-number">Question 1</h1>  
+        <h2 class="question-content">Which is the correct answer?</h2>
+        <form class="multiple-choice">
+            <input type="radio" name="choice">Answer 1<br>
+            <input type="radio" name="choice">Answer 2<br>
+            <input type="radio" name="choice">Answer 3<br>
+            <input type="radio" name="choice">Answer 4<br>
+            <input type="button" value="Next">
+            <!--How should I hide answers?-->
+            <!--Where do I store questions?-->
+        </form>
+        <div>
+            <p class="hidden">The correct answer is: <span class="correct-answer">Answer 1</span></p>
+        </div>
+        <div class="quiz-info">
+            <p class="quiz-progress">Question 1/10</p>
+            <p class="quiz-score">0 correct, 0 incorrect</p>
+        </div>
+    </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="app.js"></script>

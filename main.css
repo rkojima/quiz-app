@@ -1,3 +1,26 @@
 * {
     font-family: 'Roboto', sans-serif;
 }
+
+.quiz {
+    position: fixed;
+    left: 25px;
+}
+
+.question-number {
+    margin-top: 0;
+}
+
+.start-box {
+    position: fixed;
+    top: 0;
+    left: 25px;
+}
+
+html {
+    margin-top: 17px;
+}
+
+.hidden {
+    display: none;
+}
