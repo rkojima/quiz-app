@@ -6,23 +6,35 @@
     <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
-    <div class="quiz">
+    <div class="start-box">
+        <h1>Baseball Quiz</h1>
+        <button class="start-button">Click here to begin the quiz</button>
+    </div>
+
+    <div class="quiz hidden">
         <h1 class="question-number">Question 1</h1>  
-        <h2 class="question-content">Which is the correct answer?</h2>
+        <h2 class="question-content">When was baseball created?</h2>
         <form class="multiple-choice">
-            <input type="radio" name="choice">Answer 1<br>
-            <input type="radio" name="choice">Answer 2<br>
-            <input type="radio" name="choice">Answer 3<br>
-            <input type="radio" name="choice">Answer 4<br>
+            <label>
+                <input type="radio" value='Debatable' name='multiple' class="choice" id="answer-1">Debatable<br>
+            </label>
+            <label>
+                <input type="radio" value='1839' name='multiple' class="choice" id="answer-2">1839<br>
+            </label>
+            <label>
+                <input type="radio" value='1907' name='multiple' class="choice" id="answer-3">1907<br>
+            </label>
+            <label>
+                <input type="radio" value='1864' name='multiple' class="choice" id="answer-4">1864<br>
+            </label>
             <input type="button" value="Next">
             <!--How should I hide answers?-->
-            <!--Where do I store questions?-->
         </form>
         <div>
-            <p class="hidden">The correct answer is: <span class="correct-answer">Answer 1</span></p>
+            <p class="hidden">The correct answer is: <span class="correct-answer">Debatable</span></p>
         </div>
         <div class="quiz-info">
-            <p class="quiz-progress">Question 1/10</p>
+            <p class="quiz-progress"><span class="question-number">Question 1</span>/10</p>
             <p class="quiz-score">0 correct, 0 incorrect</p>
         </div>
     </div>
