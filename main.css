@@ -3,8 +3,8 @@
 }
 
 .quiz {
-    position: fixed;
-    left: 25px;
+    padding: 0 60px;
+    padding-top: 90px;    
 }
 
 .question-number {
@@ -12,9 +12,8 @@
 }
 
 .start-box {
-    position: fixed;
-    top: 0;
-    left: 25px;
+    padding: 0 60px;
+    padding-top: 90px;
 }
 
 html {
@@ -23,4 +22,9 @@ html {
 
 .hidden {
     display: none;
+}
+
+.final-score-page {
+    padding: 0 60px;
+    padding-top: 90px;
 }

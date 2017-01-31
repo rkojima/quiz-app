@@ -12,31 +12,26 @@
     </div>
 
     <div class="quiz hidden">
-        <h1 class="question-number">Question 1</h1>  
-        <h2 class="question-content">When was baseball created?</h2>
-        <form class="multiple-choice">
-            <label>
-                <input type="radio" value='Debatable' name='multiple' class="choice" id="answer-1">Debatable<br>
-            </label>
-            <label>
-                <input type="radio" value='1839' name='multiple' class="choice" id="answer-2">1839<br>
-            </label>
-            <label>
-                <input type="radio" value='1907' name='multiple' class="choice" id="answer-3">1907<br>
-            </label>
-            <label>
-                <input type="radio" value='1864' name='multiple' class="choice" id="answer-4">1864<br>
-            </label>
-            <input type="button" value="Next">
-            <!--How should I hide answers?-->
-        </form>
-        <div>
-            <p class="hidden">The correct answer is: <span class="correct-answer">Debatable</span></p>
+        <div class="question-and-choices">
+            <h1 class="question-number">Question 1</h1>  
+            <h2 class="question-content">When was baseball created?</h2>
+            <form class="multiple-choice">
+                <input type="radio" value='Debatable' name='multiple' class="choice" required>Debatable<br>
+                <input type="radio" value='1839' name='multiple' class="choice">1839<br>
+                <input type="radio" value='1907' name='multiple' class="choice">1907<br>
+                <input type="radio" value='1864' name='multiple' class="choice">1864<br>
+                <input type="submit" class="next" value="Next">
+                <!--How should I hide answers?-->
+            </form>
+            <p class="correct-answer-prompt hidden">The correct answer is: <span class="correct-answer">Debatable</span></p>
         </div>
         <div class="quiz-info">
-            <p class="quiz-progress"><span class="question-number">Question 1</span>/10</p>
             <p class="quiz-score">0 correct, 0 incorrect</p>
         </div>
+    </div>
+    <div class="final-score-page hidden">
+        <p>Your final score was: 10 out of 10</p><br>
+        <input type="button" value="Restart?">
     </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

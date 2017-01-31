@@ -1,5 +1,5 @@
 /*
-Users start on a screen where they can click a button to start the  quiz.
+Users start on a screen where they can click a button to start the quiz.
 
 Once the game is started, the user should be prompted through a series of at least 5 multiple choice questions which they can answer. Questions are to be asked one after another, and the user should only be able to view one question at a time.
 
@@ -17,6 +17,8 @@ Need to disable radio buttons after chosen
 Need "Next" button to lead to next question
 Need to show correct answer if wrong
 */
+
+"use strict";
 
 var state = {
     questionNumber: 0, //what question the user is on, zero indexed.
@@ -63,7 +65,7 @@ var questionBank = [
     {
         question: "Who has the most Gold Glove Awards?",
         choices: ["Ivan Rodriguez", "Ozzie Smith", "Roberto Clemente", "Greg Maddux"],
-        corrrectAnswer: "Greg Maddux"
+        correctAnswer: "Greg Maddux"
     },
     {
         question: "Who has the highest batting average in a season?",
@@ -101,13 +103,32 @@ function shuffle(array) {
 
 
 function unhideQuiz() { //hide .start-box and show .quiz
-        $('.start-box').addClass('hidden');
-        $('.quiz').removeClass('hidden');
+    $('.start-box').addClass('hidden');
+    $('.final-score-page').addClass('hidden');
+    $('.quiz').removeClass('hidden');
 }
 
-function compareAnswer(state) {
-    //would not putting in this as parameter be ok?
+function hideQuiz() {
+    $('.quiz').addClass('hidden');
+}
 
+function compareAnswer(state, questionBank, choice) {
+    var whichQuestion = questionBank[state.questionNumber]; //the question they're on
+    //console.log(choice);
+    //console.log(whichQuestion.correctAnswer);
+    if (whichQuestion.correctAnswer === choice) {
+        state.userCorrect += 1;
+        //console.log('correct');
+    } 
+    else {
+        state.userIncorrect += 1;
+        unhideCorrectAnswer(state);
+        //console.log("incorrect");
+    }
+}
+
+function unhideCorrectAnswer(state) {
+    $('.correct-answer-prompt').removeClass('hidden');
 }
 
 function checked() {
@@ -123,24 +144,85 @@ function enableRadio() {
     $('input[type=radio]').attr('disabled', false);
 }
 
-function generateHTML(questionBank, state) {
+function generateHTML(questionBank, state, element) {
+    //Should be used when "Next" button is clicked
     var currQuestion = questionBank[state.questionNumber];
+    //console.log(currQuestion);
     var html = "";
+    html += '<h1 class="question-number">Question ' + (state.questionNumber + 1) + ' of 10</h1>';
+    html += '<h2 class="question-content">' + currQuestion.question + '</h2>';
+    html += '<form class="multiple-choice">';
+
     currQuestion.choices.forEach(function(choice) {
-        html += '<label><input type="radio" value="' + choice + ' name="multiple" class="choice">' + choice + '<br></label>';
+        html += '<label><input type="radio" value="' + choice + '" name="multiple" class="choice" required>' + choice + '<br></label>';
     });
-    return html;
+    html += '<input type="submit" value="Next"></form>';
+    //console.log(html);//FIXED: looked like I forgot end quotation marks for each value
+    html += '<p class="correct-answer-prompt hidden">The correct answer is: ' + currQuestion.correctAnswer + '</span></p>';
+    return element.html(html);
+}
+
+function generateScoreHTML(state, element) {
+    var score = '<p class="quiz-score">' + state.userCorrect + ' correct, ' + state.userIncorrect + ' incorrect</p>';
+    return element.html(score);
+}
+
+function reset() {
+    state.userCorrect = 0;
+    state.userIncorrect = 0;
+    state.questionNumber = 0;
+    generateScoreHTML(state, $('.quiz-info'));
+}
+
+function finalScore(state, element) {
+    $('.final-score-page').removeClass('hidden');
+    //console.log('test');
+    var final = '<p> Your final score was: ' + state.userCorrect + ' out of 10.<br><input type="button" value="Restart?">';
+    return element.html(final);
+}
+
+function restart() {
+    reset();
+    shuffle(questionBank);
+    generateHTML(questionBank, state, $('.question-and-choices'));        
 }
 
 $(document).ready(function() {
-    $('.start-button').click(unhideQuiz);
+    console.log('test');
+    reset();
     shuffle(questionBank);
-    //generate first question
-    $('.choice').on('click', disableRadio);
-    $('.choice').on('click', checked);
-    $('.choice').on('click', function(event) {
-        var test = $('input[name=multiple]:checked').val();
-        console.log($("#answer-1").text());
+    //console.log(questionBank);
+    generateHTML(questionBank, state, $('.question-and-choices'));
+    $('.start-button').click(unhideQuiz);
+     //@TODO generate first question
+    $('.question-and-choices').on('click', '.choice', disableRadio);
+    $('.question-and-choices').on('click', '.choice', checked);
+    $('.question-and-choices').on('click', '.choice', function(event) {
+        var userChoice = $('input[name="multiple"]:checked').val();
+        //console.log(userChoice);
+        compareAnswer(state, questionBank, userChoice);
+        //console.log(state);
+        //console.log(userChoice); checking if value of userChoice actually came out\
+        generateScoreHTML(state, $('.quiz-info'));
+    });
+    $('.question-and-choices').on('submit', 'form', function(event) {//use submit instead of click because click doesn't validate form
+        event.preventDefault();
+        if (state.questionNumber === 9) {
+            hideQuiz();
+            finalScore(state, $('.final-score-page'));
+        }
+        else {
+            state.questionNumber += 1;
+            generateHTML(questionBank, state, $('.question-and-choices'));
+            //console.log(questionBank[state.questionNumber]);
+            //console.log(state.userCorrect);
+        }
+        //Needs event delegation
+    });
+    $('.final-score-page').on('click', 'input[value="Restart?"]', function(event) {
+        //console.log('test'); FIXED weird bug where if you do all 10 questions, then it'll go straight to the start page, which means that it basically refreshed itself. 
+        unhideQuiz();
+        restart();
     });
     //keep tab on score
     //clicks Next, then generates next question
